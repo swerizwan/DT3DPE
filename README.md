@@ -22,17 +22,29 @@ Install the requirements
 ```
 pip install -r requirements.txt
 ```
-
+Download Pre-trained Models, Evaluation Models, and Gloves 
+```
+bash prepare/download_models.sh
+bash prepare/download_evaluator.sh
+bash prepare/download_glove.sh
+```
 # Demo
 
+Output from a single prompt
 ```
-python demo.py --cfg ./configs/config_motiontext_humanml3d.yaml --cfg_assets ./configs/assets.yaml --example demo.txt
-
-/home/abbas/motiontext/blender/blender-2.83.0-linux64/blender --background --python render.py -- --cfg=./configs/render.yaml --dir=/home/abbas/motiontext/outcomes/motiontext/HumanML3D/samples_2024-11-10-18-50-15/ --mode=video --joint_type=HumanML3D
+python t2m_animation_generator.py --gpu_id 1 --ouput ouput1 --text "A person performs jumping jacks."
+```
+Output from a text file
+```
+python t2m_animation_generator.py --gpu_id 1 --ouput ouput2 --text_path ./assets/textfile.txt
+```
+Visualization
+```
+blender --background --python render.py -- --cfg=./configs/render.yaml --dir=/home/abbas/motiontext/outcomes/motiontext/HumanML3D/samples_2024-11-10-18-50-15/ --mode=video --joint_type=HumanML3D
 
 python -m fit --dir /home/abbas/motiontext/outcomes/motiontext/HumanML3D/samples_2024-11-10-18-50-15/ --save_folder /home/abbas/motiontext/outcomes/motiontext/HumanML3D/samples_2024-11-10-18-50-15/tamp --cuda True
 
-/home/abbas/motiontext/blender/blender-2.83.0-linux64/blender --background --python render.py -- --cfg=./configs/render.yaml --dir=/home/abbas/motiontext/results/motiontext/1222_PELearn_Diff_Latent1_MEncDec49_MdiffEnc49_bs64_clip_uncond75_01/samples_2024-10-18-22-15-14/ --mode=video --joint_type=HumanML3D
+blender --background --python render.py -- --cfg=./configs/render.yaml --dir=/home/abbas/motiontext/results/motiontext/1222_PELearn_Diff_Latent1_MEncDec49_MdiffEnc49_bs64_clip_uncond75_01/samples_2024-10-18-22-15-14/ --mode=video --joint_type=HumanML3D
 ```
 
 Qualitative results demonstrating DT3DPE's capability to synthesize human movement for pose estimation from textual descriptions.
@@ -106,16 +118,14 @@ We evaluated DT3DPE using three key datasets for text-driven human movement synt
 
 - **Train**
 ```
-python -m train --cfg configs/config_vae_humanml3d.yaml --cfg_assets configs/assets.yaml --batch_size 64 --nodebug
-python -m train --cfg configs/config_motiontext_humanml3d.yaml --cfg_assets configs/assets.yaml --batch_size 64 --nodebug
-python -m train --cfg configs/config_motiontext_humanact12.yaml --cfg_assets configs/assets.yaml --batch_size 64 --nodebug
-python -m train --cfg configs/config_vae_kit.yaml --cfg_assets configs/assets.yaml --batch_size 32 --nodebug
+python vq_trainer.py --name rvq_name --gpu_id 1 --dataset_name t2m --batch_size 256 --num_quantizers 6  --max_epoch 50 --quantize_dropout_prob 0.2 --gamma 0.05
+python train_t2m_mask.py --name mtrans_name --gpu_id 2 --dataset_name t2m --batch_size 64 --vq_name rvq_name
+python train_t2m_res.py --name rtrans_name  --gpu_id 2 --dataset_name t2m --batch_size 64 --vq_name rvq_name --cond_drop_prob 0.2 --share_weight
 ```
 
-## Running the Demo
+- **Evaluation**
+```
+python eval_t2m_vq.py --gpu_id 1 --name rvq_nq6_dc512_nc512_noshare_qdp0.2 --dataset_name t2m --ext rvq_nq6
+python eval_t2m_vq.py --gpu_id 1 --name rvq_nq6_dc512_nc512_noshare_qdp0.2_k --dataset_name kit --ext rvq_nq6
+```
 
-To run the demo, follow these steps:
-
-1. Download Blender from [Blender Official Website](https://www.blender.org/download/), and place it in the Blender folder within the root directory.
-2. Download the pre-trained model from [Pre-Trained Model Link](https://drive.google.com/file/d/1Y7Ht4zmdRbSRLYU41naI2wWLrlW_ZVT0/view?usp=sharing) and put it in the `pre-trained` folder in the root directory.
-3. Run the demo by executing `python demo.py --cfg ./configs/config_motiontext_humanml3d.yaml --cfg_assets ./configs/assets.yaml --example demo.txt` with the desired input voice. 
