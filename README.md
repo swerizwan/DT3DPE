@@ -125,7 +125,7 @@ python train_t2m_res.py --name rtrans_name  --gpu_id 2 --dataset_name t2m --batc
 
 - **Evaluation**
 ```
-python eval_t2m_vq.py --gpu_id 1 --name rvq_nq6_dc512_nc512_noshare_qdp0.2 --dataset_name t2m --ext rvq_nq6
-python eval_t2m_vq.py --gpu_id 1 --name rvq_nq6_dc512_nc512_noshare_qdp0.2_k --dataset_name kit --ext rvq_nq6
+python vq_evaluator.py --gpu_id 1 --name rvq_nq6_dc512_nc512_noshare_qdp0.2 --dataset_name t2m --ext rvq_nq6
+python vq_evaluator.py --gpu_id 1 --name rvq_nq6_dc512_nc512_noshare_qdp0.2_k --dataset_name kit --ext rvq_nq6
 ```
 
