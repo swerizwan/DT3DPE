@@ -121,8 +121,7 @@ We evaluated DT3DPE using three key datasets for text-driven human movement synt
 python vq_trainer.py --name rvq_name --gpu_id 1 --dataset_name t2m --batch_size 256 --num_quantizers 6  --max_epoch 50 --quantize_dropout_prob 0.2 --gamma 0.05
 python train_t2m_mask.py --name mtrans_name --gpu_id 2 --dataset_name t2m --batch_size 64 --vq_name rvq_name
 python train_t2m_res.py --name rtrans_name  --gpu_id 2 --dataset_name t2m --batch_size 64 --vq_name rvq_name --cond_drop_prob 0.2 --share_weight
-```
-
+``
 - **Evaluation**
 ```
 python vq_evaluator.py --gpu_id 1 --name rvq_nq6_dc512_nc512_noshare_qdp0.2 --dataset_name t2m --ext rvq_nq6
