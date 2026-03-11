@@ -22,10 +22,6 @@ Install the requirements
 ```
 pip install -r requirements.txt
 ```
-Download Gloves 
-```
-bash prepare/download_glove.sh
-```
 # Demo
 
 Output from a single prompt
