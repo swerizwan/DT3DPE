@@ -109,8 +109,8 @@ Qualitative results demonstrating DT3DPE's capability to synthesize human moveme
 
 We evaluated DT3DPE using three key datasets for text-driven human movement synthesis:
 
-- **HumanML3D**: Combines HumanAct12 and AMASS datasets, featuring 14,616 movements and 44,970 text descriptions. It spans diverse actions like daily tasks, athletics, and performances, with clips totaling 28.59 hours. Each movement has 3-4 descriptive sentences. [Dataset Link](https://drive.google.com/file/d/1rmnG-R8wTb1sRs0PYp4RRmLg8XH-qSGW/view) 
-- **KIT-ML**: Includes 3,911 movements with 6,278 text descriptions, linking human actions to natural language. It advances research on movement-language correlations with a focus on accessibility and clarity. [Dataset Link](https://drive.google.com/file/d/1IXRBm4qSjLQxp1J3cqv1xd8yb-RQY0Jz/view) 
+- **HumanML3D**: Combines HumanAct12 and AMASS datasets, featuring 14,616 movements and 44,970 text descriptions. It spans diverse actions like daily tasks, athletics, and performances, with clips totaling 28.59 hours. Each movement has 3-4 descriptive sentences. [Dataset Link](https://cove.thecvf.com/datasets/682) 
+- **KIT-ML**: Includes 3,911 movements with 6,278 text descriptions, linking human actions to natural language. It advances research on movement-language correlations with a focus on accessibility and clarity. [Dataset Link](https://motion-annotation.humanoids.kit.edu/dataset/) 
 
 # Train & Evaluate
 
